@@ -1,53 +1,23 @@
-import { useAppDispatch, useAppSelector } from "@store/hooks";
-import {
-  actAuthLogin,
-  resetUI,
-} from "@store/authentication/authenticationSlice";
-import { useSearchParams, useNavigate, Navigate } from "react-router-dom";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Navigate } from "react-router-dom";
+
 import { Heading } from "@components/common";
 import { Input } from "@components/Form";
-import { LoginSchema, TLoginSchema } from "@validations/loginSchema";
-import { Button, Col, Form, Row, Alert, Spinner } from "react-bootstrap";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { Button, Col, Form, Row, Alert, Spinner } from "react-bootstrap";
+import UseLogin from "@hooks/useLogin";
 
 const Login = () => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const { error, loading, accessToken } = useAppSelector((state) => state.auth);
-
-  useEffect(() => {
-    return () => {
-      dispatch(resetUI());
-    };
-  }, [dispatch]);
-
   const {
-    register,
+    accessToken,
+    emailOnblurHandler,
+    error,
+    errors,
     handleSubmit,
-    formState: { errors },
-  } = useForm<TLoginSchema>({
-    mode: "onBlur",
-    resolver: zodResolver(LoginSchema),
-  });
-
-  const submitForm: SubmitHandler<TLoginSchema> = async (data) => {
-    if (searchParams.get("message")) {
-      setSearchParams("");
-    }
-    dispatch(actAuthLogin(data))
-      .unwrap()
-      .then(() => navigate("/"));
-  };
-
-  const emailOnblurHandler = (e: React.FocusEvent<HTMLInputElement>) => {
-    console.log(e);
-  };
+    loading,
+    register,
+    submitForm,
+    searchParams,
+  } = UseLogin();
 
   if (accessToken) {
     return <Navigate to="/" />;
