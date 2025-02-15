@@ -19,7 +19,7 @@ const actGetWishlist = createAsyncThunk(
       );
 
       if (!userWishlist.data.length) {
-        return { data: [], dataType: "ProductFullInfo" };
+        return { data: [], dataType: "empty" };
       }
 
       if (dataType === "ProductIds") {

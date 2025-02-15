@@ -54,12 +54,17 @@ const wishlistSlice = createSlice({
     });
     builder.addCase(actGetWishlist.fulfilled, (state, action) => {
       state.loading = "succeeded";
+
       if (action.payload.dataType === "ProductFullInfo") {
         state.productsFullInfo = action.payload.data as TProduct[];
-      } else {
+      } else if (action.payload.dataType === "ProductIds") {
         state.itemsId = action.payload.data as number[];
+      } else {
+        state.itemsId = [];
+        state.productsFullInfo = [];
       }
     });
+
     builder.addCase(actGetWishlist.rejected, (state, action) => {
       state.loading = "failed";
       if (isString(action.payload)) {
