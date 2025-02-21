@@ -4,8 +4,14 @@ import { Loading, LottieHandler } from "@components/feedback";
 import useCart from "@hooks/useCart";
 
 const Cart = () => {
-  const { products, changeQuantityHandler, removeItemHandler, loading, error } =
-    useCart();
+  const {
+    products,
+    changeQuantityHandler,
+    removeItemHandler,
+    loading,
+    error,
+    userAccessToken,
+  } = useCart();
 
   return (
     <>
@@ -21,7 +27,10 @@ const Cart = () => {
                 changeQuantityHandler={changeQuantityHandler}
                 removeItemHandler={removeItemHandler}
               />
-              <CartSubtotalPrice products={products} />
+              <CartSubtotalPrice
+                products={products}
+                userAccessToken={userAccessToken}
+              />
             </>
           )}
         </>

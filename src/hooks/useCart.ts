@@ -9,9 +9,12 @@ import { useAppDispatch, useAppSelector } from "@store/hooks";
 
 const UseCart = () => {
   const dispatch = useAppDispatch();
+
   const { items, productFullInfo, loading, error } = useAppSelector(
     (state) => state.cart
   );
+
+  const userAccessToken = useAppSelector((state) => state.auth.accessToken);
 
   useEffect(() => {
     const promise = dispatch(actGetProductsByItems());
@@ -40,7 +43,14 @@ const UseCart = () => {
     [dispatch]
   );
 
-  return { products, changeQuantityHandler, removeItemHandler, loading, error };
+  return {
+    products,
+    changeQuantityHandler,
+    removeItemHandler,
+    loading,
+    error,
+    userAccessToken,
+  };
 };
 
 export default UseCart;
