@@ -10,8 +10,9 @@ import Like from "@assets/svg/like.svg?react";
 import LikeFill from "@assets/svg/like-fill.svg?react";
 
 import styles from "./style.module.css";
+import ProductInfo from "../ProductInfo/ProductInfo";
 
-const { product, productImg, maximumNotice, wishListBTN } = styles;
+const { maximumNotice, wishListBTN } = styles;
 
 const Product = memo(
   ({
@@ -75,7 +76,7 @@ const Product = memo(
             You need to login first to add this item to your wishlist.
           </Modal.Body>
         </Modal>
-        <div className={product}>
+        <ProductInfo title={title} img={img} price={price}>
           <div className={wishListBTN} onClick={LikeToggleHandler}>
             {isLoading ? (
               <Spinner animation="border" size="sm" variant="primary" />
@@ -85,11 +86,6 @@ const Product = memo(
               <Like />
             )}
           </div>
-          <div className={productImg}>
-            <img src={img} alt={title} />
-          </div>
-          <h2 title={title}>{title}</h2>
-          <h3>${price.toFixed(2)}</h3>
           <p className={maximumNotice}>
             {quantityReachedToMax
               ? "You reach to the limit"
@@ -98,7 +94,7 @@ const Product = memo(
           <Button
             onClick={addToCartHandler}
             variant="info"
-            style={{ color: "white" }}
+            style={{ color: "white", width: "100%" }}
             disabled={isBTNDisabled || quantityReachedToMax}
           >
             {isBTNDisabled ? (
@@ -109,7 +105,7 @@ const Product = memo(
               "Add to cart"
             )}
           </Button>
-        </div>
+        </ProductInfo>
       </>
     );
   }
