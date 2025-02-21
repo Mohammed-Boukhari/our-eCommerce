@@ -35,5 +35,6 @@ const ordersSlice = createSlice({
     });
   },
 });
+
 export { actPlaceOrder };
 export default ordersSlice.reducer;
